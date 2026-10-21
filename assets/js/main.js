@@ -5,3 +5,11 @@ document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().g
 const date=document.getElementById('eventDate');if(date){const now=new Date();date.min=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);const requested=new URLSearchParams(location.search).get('event'),type=document.getElementById('eventType');if(requested&&type){const match=[...type.options].find(o=>o.text.toLowerCase()===requested.toLowerCase());if(match)type.value=match.value}}
 const form=document.getElementById('quoteForm');if(form)form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const d=new FormData(form),lines=['Hi Boland Spitbraai, I would like to enquire about catering.','', 'Name: '+d.get('fullName'),'Phone: '+d.get('phone'),'Email: '+(d.get('email')||'Not provided'),'Event: '+d.get('eventType'),'Date: '+d.get('eventDate'),'Estimated guests: '+d.get('guestCount'),'Venue / area: '+d.get('venue'),'Menu ideas / details: '+(d.get('foodNeeds')||'Not specified'),'','Please let me know about availability and a quote. Thank you.'];const status=document.getElementById('formStatus');status.textContent='Opening WhatsApp with your enquiry. Review the details and tap Send to contact Boland Spitbraai.';status.classList.add('is-visible');window.open('https://wa.me/27836591840?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener,noreferrer')});
 })();
+/* Subtle scroll reveals: content remains visible when motion is reduced or JS is unavailable. */
+document.documentElement.classList.add('has-reveal');
+const revealTargets=document.querySelectorAll('.land-copy,.land-animal,.land-feast,.package-card,.section-heading,.intro-grid>div');
+revealTargets.forEach((el,i)=>{el.classList.add('scroll-reveal');el.style.setProperty('--reveal-delay',Math.min(i%3,2)*90+'ms')});
+if('IntersectionObserver' in window){
+ const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.14,rootMargin:'0px 0px -35px 0px'});
+ revealTargets.forEach(el=>revealObserver.observe(el));
+}else{revealTargets.forEach(el=>el.classList.add('is-visible'))}
