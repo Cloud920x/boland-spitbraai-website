@@ -132,7 +132,7 @@ h1 em,h2 em{color:var(--accent)}
  --accent2:#4d98d2;
  --white:#ffffff;
 }
-body{background:#fff;color:var(--ink)}
+body{background:#fff;color:var(--ink)}body>header,body>main,body>footer{position:relative;z-index:1}
 .site-header{background:rgba(255,255,255,.97);color:var(--ink);border-bottom:1px solid rgba(23,43,66,.13);box-shadow:0 5px 22px rgba(23,43,66,.04)}
 .brand-mark{border-color:var(--accent);color:var(--accent)}
 .brand-name small{color:#71849a}
@@ -195,14 +195,14 @@ h1 em,h2 em,.quote-intro h1 em{color:var(--accent)}
 .nav-toggle span{background:var(--ink)}
 /* Light, fixed brick texture sits behind content so the page can scroll over it. */
 body::before{
- content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
  background-color:#f8fbff;
  background-image:
-  linear-gradient(rgba(69,117,158,.13) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(69,117,158,.13) 1px,transparent 1px),
-  linear-gradient(rgba(255,255,255,.9) 0 0);
- background-size:100% 32px,64px 64px,100% 100%;
- background-position:0 0,0 0,0 0;
+  linear-gradient(rgba(69,117,158,.15) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(69,117,158,.15) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(69,117,158,.15) 1px,transparent 1px);
+ background-size:100% 32px,64px 64px,64px 64px;
+ background-position:0 0,0 0,32px 32px;
 }
 @media(max-width:800px){
  .site-nav{background:#fff}
