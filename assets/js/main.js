@@ -1,53 +1,7 @@
 (() => {
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.site-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!isOpen));
-      nav.classList.toggle('is-open', !isOpen);
-      document.body.classList.toggle('nav-open', !isOpen);
-    });
-    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-      toggle.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.classList.remove('nav-open');
-    }));
-  }
-
-  document.querySelectorAll('[data-year]').forEach(el => {
-    el.textContent = new Date().getFullYear();
-  });
-
-  const dateInput = document.getElementById('eventDate');
-  if (dateInput) {
-    const today = new Date();
-    const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    dateInput.min = localToday;
-    const requestedEvent = new URLSearchParams(window.location.search).get('event');
-    const eventType = document.getElementById('eventType');
-    if (requestedEvent && eventType) {
-      const match = Array.from(eventType.options).find(option => option.text.toLowerCase() === requestedEvent.toLowerCase());
-      if (match) eventType.value = match.value;
-    }
-  }
-
-  const quoteForm = document.getElementById('quoteForm');
-  if (quoteForm) {
-    quoteForm.addEventListener('submit', event => {
-      event.preventDefault();
-      const status = document.getElementById('formStatus');
-      if (!quoteForm.reportValidity()) return;
-      const data = new FormData(quoteForm);
-      const preview = {
-        name: data.get('fullName'),
-        event: data.get('eventType'),
-        date: data.get('eventDate'),
-        guests: data.get('guestCount'),
-        venue: data.get('venue')
-      };
-      status.textContent = 'Demo preview only — no enquiry was sent. Your details are not stored. Event: ' + preview.event + ', date: ' + preview.date + ', guests: ' + preview.guests + ', venue: ' + preview.venue + '. Connect an approved form service before accepting real enquiries.';
-      status.classList.add('is-visible');
-    });
-  }
+const toggle=document.querySelector('.nav-toggle'),nav=document.querySelector('.site-nav');
+if(toggle&&nav){toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));nav.classList.toggle('is-open',!open);document.body.classList.toggle('nav-open',!open)});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('is-open');document.body.classList.remove('nav-open')}))}
+document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
+const date=document.getElementById('eventDate');if(date){const now=new Date();date.min=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);const requested=new URLSearchParams(location.search).get('event'),type=document.getElementById('eventType');if(requested&&type){const match=[...type.options].find(o=>o.text.toLowerCase()===requested.toLowerCase());if(match)type.value=match.value}}
+const form=document.getElementById('quoteForm');if(form)form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const d=new FormData(form),lines=['Hi Boland Spitbraai, I would like to enquire about catering.','', 'Name: '+d.get('fullName'),'Phone: '+d.get('phone'),'Email: '+(d.get('email')||'Not provided'),'Event: '+d.get('eventType'),'Date: '+d.get('eventDate'),'Estimated guests: '+d.get('guestCount'),'Venue / area: '+d.get('venue'),'Menu ideas / details: '+(d.get('foodNeeds')||'Not specified'),'','Please let me know about availability and a quote. Thank you.'];const status=document.getElementById('formStatus');status.textContent='Opening WhatsApp with your enquiry. Review the details and tap Send to contact Boland Spitbraai.';status.classList.add('is-visible');window.open('https://wa.me/27836591840?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener,noreferrer')});
 })();
